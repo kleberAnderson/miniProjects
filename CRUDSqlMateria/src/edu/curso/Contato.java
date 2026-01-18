@@ -64,7 +64,7 @@ public class Contato {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Contato) {
-            Contato obj = (Contato) o;
+            Contato obj = (Contato)o;
             return
                     getId() == obj.getId() &&
                             getNome().equals(obj.getNome()) &&

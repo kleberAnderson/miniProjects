@@ -10,12 +10,14 @@ public class ContatoControl {
 
     private ObservableList<Contato> lista = FXCollections.observableArrayList();
 
-    private LongProperty id = new SimpleLongProperty();
+    private LongProperty id = new SimpleLongProperty(0);
     private StringProperty nome = new SimpleStringProperty("");
     private StringProperty email = new SimpleStringProperty("");
     private StringProperty telefone = new SimpleStringProperty("");
 
-    private ObjectProperty<LocalDate> nascimento = new SimpleObjectProperty<>(LocalDate.now());
+    private ObjectProperty<LocalDate> nascimento = new SimpleObjectProperty<>(
+            LocalDate.now()
+    );
 
     private ContatoDAO contatoDAO = new ContatoDAOImpl();
 
@@ -42,6 +44,8 @@ public class ContatoControl {
         Contato contato = paraEntidade();
         Contato contatoAntigo = procurarContatoPorId( contato.getId() );
         if ( contatoAntigo != null ) {
+            contatoDAO.atualizar(contato.getId(), contato);
+        } else {
             contatoDAO.criar( contato );
             lista.add( contato );
         }

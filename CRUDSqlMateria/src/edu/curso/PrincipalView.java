@@ -23,25 +23,26 @@ public class PrincipalView extends Application {
 
         Scene scn = new Scene(panPrincipal, 600, 400);
 
-        MenuBar menuBar = new MenuBar();
+        //MenuBar menuBar = new MenuBar();
 
-        Menu menuFile = new Menu("File");
-        Menu menuEdit = new Menu("Edit");
-        Menu menuTela = new Menu("Tela");
-        Menu menuHelp = new Menu("Help");
+        //Menu menuFile = new Menu("File");
+        //Menu menuEdit = new Menu("Edit");
+        //Menu menuTela = new Menu("Tela");
+        //Menu menuHelp = new Menu("Help");
 
-        menuBar.getMenus().addAll( menuFile, menuEdit, menuTela, menuHelp);
+        //menuBar.getMenus().addAll( menuFile, menuEdit, menuTela, menuHelp);
 
-        MenuItem itemContato = new MenuItem("Contato");
-        menuTela.getItems().addAll(itemContato);
+        //MenuItem itemContato = new MenuItem("Contato");
+        //menuTela.getItems().addAll(itemContato);
 
-        itemContato.setOnAction( e -> panPrincipal.setCenter( telaContatoView ));
+        //itemContato.setOnAction( e -> panPrincipal.setCenter( telaContatoView ));
 
-        panPrincipal.setTop( menuBar );
+        //panPrincipal.setTop( menuBar );
 
         stage.setScene(scn);
         stage.setTitle("Sistema de Contatos");
         stage.show();
+        panPrincipal.setCenter(telaContatoView);
 
     }
 

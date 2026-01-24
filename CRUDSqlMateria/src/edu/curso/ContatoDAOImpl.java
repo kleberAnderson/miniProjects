@@ -27,14 +27,14 @@ public class ContatoDAOImpl implements ContatoDAO{
 
     @Override
     public void criar(Contato contato) {
-        String sql = String.format("INSERT INTO contato (nome, telefone, email, nascimento)" +
-                "VALUES (?, ?, ?, ?)");
+        String sql = "INSERT INTO contato (nome, telefone, email, nascimento)" +
+                "VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement pst = this.con.prepareStatement( sql );
             pst.setString(1, contato.getNome());
             pst.setString(2, contato.getTelefone());
             pst.setString(3, contato.getEmail());
-            pst.setDate(4, Date.valueOf(contato.getNascimento()));
+            pst.setDate(4, Date.valueOf(contato.getNascimento().format( dtf )));
 
             pst.executeUpdate();
             System.out.println("Contato adicionado com sucesso");
@@ -45,12 +45,14 @@ public class ContatoDAOImpl implements ContatoDAO{
 
     @Override
     public Contato procurarPorId(long id) {
-        String sql = "SELECT * FROM agenda WHERE id =" + id;
+        String sql = "SELECT * FROM contato WHERE id = ?";
         System.out.println(sql);
         Contato c = null;
         try {
             PreparedStatement pst = this.con.prepareStatement( sql );
+            pst.setString(1, String.valueOf(id));
             ResultSet rs = pst.executeQuery();
+            System.out.println("Contato procurado.");
             if ( rs.next() ) {
                 c = new Contato();
                 c.setId( rs.getLong("id") );
@@ -67,13 +69,14 @@ public class ContatoDAOImpl implements ContatoDAO{
 
     @Override
     public List<Contato> lerTodos() {
-        String sql = "SELECT * FROM agenda";
+        String sql = "SELECT * FROM contato";
         System.out.println(sql);
         List<Contato> lista = new ArrayList<>();
 
         try {
             PreparedStatement pst = this.con.prepareStatement( sql );
             ResultSet rs = pst.executeQuery();
+            System.out.println("Contatos buscados");
             while (rs.next()) {
                 Contato c = new Contato();
                 c.setId( rs.getLong("id") );
@@ -91,17 +94,18 @@ public class ContatoDAOImpl implements ContatoDAO{
 
     @Override
     public void atualizar(long id, Contato contato) {
-        String sql = String.format("UPDATE SET nome='%s', telefone='%s', email='%s', " +
-        "nascimento='%s' WHERE id=%d",
-                contato.getNome(),
-                contato.getTelefone(),
-                contato.getEmail(),
-                contato.getNascimento().format(dtf),
-                id);
+        String sql = "UPDATE contato SET nome = ?, telefone = ?, email = ?, " +
+        "nascimento = ? WHERE id = ?";
         System.out.println(sql);
         try {
             PreparedStatement pst = this.con.prepareStatement( sql );
+            pst.setLong(5, id);
+            pst.setString(1, contato.getNome());
+            pst.setString(2, contato.getTelefone());
+            pst.setString(3, contato.getEmail());
+            pst.setDate(4, Date.valueOf(contato.getNascimento().format( dtf )));
             pst.executeUpdate();
+            System.out.println("Contato atualizado com sucesso");
         } catch ( SQLException e ) {
             e.printStackTrace();
         }
@@ -109,11 +113,13 @@ public class ContatoDAOImpl implements ContatoDAO{
 
     @Override
     public void deletar(long id) {
-        String sql = String.format("DELETE FROM agenda WHERE id=%d", id);
+        String sql = "DELETE FROM contato WHERE id = ?";
         System.out.println(sql);
         try {
             PreparedStatement pst = this.con.prepareStatement( sql );
+            pst.setString(1, String.valueOf(id));
             pst.executeUpdate();
+            System.out.println("Contato deletado com sucesso");
         } catch ( SQLException e ) {
             e.printStackTrace();
         }

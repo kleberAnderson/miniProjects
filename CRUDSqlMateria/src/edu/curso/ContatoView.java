@@ -11,7 +11,7 @@ import javafx.util.converter.NumberStringConverter;
 import java.time.format.DateTimeFormatter;
 
 public class ContatoView implements Tela{
-    private Label lblId = new Label();
+    private Label lblId = new Label("");
     private TextField txtNome = new TextField();
     private TextField txtEmail = new TextField();
     private TextField txtTelefone = new TextField();

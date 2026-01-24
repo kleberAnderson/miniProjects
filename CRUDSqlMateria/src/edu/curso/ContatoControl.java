@@ -52,9 +52,9 @@ public class ContatoControl {
     }
 
     public void pesquisar() {
-        for (Contato c : lista) {
-            if ( c.getNome().contains( nome.get() )) {
-                paraTela(c);
+        for (Contato contato : lista) {
+            if ( contato.getNome().contains( nome.get() )) {
+                paraTela(contato);
                 break;
             }
         }
